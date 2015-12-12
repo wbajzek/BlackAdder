@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="Vc23sL" name="BlackAdder" projectType="audioplug" version="1.0.0"
+              bundleIdentifier="com.yourcompany.BlackAdder" includeBinaryInAppConfig="1"
+              buildVST="1" buildVST3="1" buildAU="1" buildRTAS="0" buildAAX="0"
+              pluginName="BlackAdder" pluginDesc="BlackAdder" pluginManufacturer="yourcompany"
+              pluginManufacturerCode="Manu" pluginCode="Vc23" pluginChannelConfigs="{1, 1}, {2, 2}"
+              pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
+              pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="0"
+              pluginAUExportPrefix="BlackAdderAU" pluginRTASCategory="" aaxIdentifier="com.yourcompany.BlackAdder"
+              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.0.2">
+  <MAINGROUP id="ggQ9Eb" name="BlackAdder">
+    <GROUP id="{41C0A1BE-C994-856A-7F32-4EC8EB1D6AE3}" name="Source">
+      <FILE id="B4N24Q" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="KUUskg" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="Fql04T" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="VHJAZB" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+                       isDebug="1" optimisation="1" targetName="BlackAdder"/>
+        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+                       isDebug="0" optimisation="3" targetName="BlackAdder"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../ownCloud/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../ownCloud/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
+</JUCERPROJECT>
