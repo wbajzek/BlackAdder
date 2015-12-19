@@ -102,8 +102,14 @@ void BlackAdderAudioProcessor::changeProgramName (int index, const String& newNa
 //==============================================================================
 void BlackAdderAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    currentSampleRate = sampleRate;
+    updateAngleDelta();
+}
+
+void BlackAdderAudioProcessor::updateAngleDelta()
+{
+    const double cyclesPerSample = frequency / currentSampleRate;
+    angleDelta = cyclesPerSample * 2.0 * double_Pi;                               
 }
 
 void BlackAdderAudioProcessor::releaseResources()
@@ -114,22 +120,18 @@ void BlackAdderAudioProcessor::releaseResources()
 
 void BlackAdderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // I've added this to avoid people getting screaming feedback
-    // when they first compile the plugin, but obviously you don't need to
-    // this code if your algorithm already fills all the output channels.
-    for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+    
+    const float level = 0.125f;
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    for (int channel = 0; channel < getNumInputChannels(); ++channel)
-    {
-        float* channelData = buffer.getWritePointer (channel);
+    for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+        const float currentSample = (float) std::sin(currentAngle);
+        currentAngle += angleDelta;
 
-        // ..do something to the data...
+        for (int channel = 0; channel < getNumOutputChannels(); ++channel)
+        {
+            float* channelData = buffer.getWritePointer (channel);
+            channelData[sample] = currentSample * level;
+        }
     }
 }
 

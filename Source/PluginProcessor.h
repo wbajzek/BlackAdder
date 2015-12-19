@@ -59,6 +59,14 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+    
+    double currentSampleRate = 0.0  ;
+    double currentAngle = 0.0;
+    double angleDelta = 0.0;
+    double frequency = 440.0;
+
+    void updateAngleDelta();
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BlackAdderAudioProcessor)
 };
