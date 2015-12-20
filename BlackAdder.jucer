@@ -8,9 +8,14 @@
               pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="0"
               pluginAUExportPrefix="BlackAdderAU" pluginRTASCategory="" aaxIdentifier="com.yourcompany.BlackAdder"
-              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.0.2">
+              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.0.2"
+              defines="">
   <MAINGROUP id="ggQ9Eb" name="BlackAdder">
     <GROUP id="{41C0A1BE-C994-856A-7F32-4EC8EB1D6AE3}" name="Source">
+      <GROUP id="{C0B10E68-0E44-4804-D107-41E4D15B67C3}" name="Synthesizer">
+        <FILE id="j87JQZ" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
+        <FILE id="IUTAZK" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
+      </GROUP>
       <FILE id="B4N24Q" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="KUUskg" name="PluginProcessor.h" compile="0" resource="0"
@@ -25,7 +30,7 @@
                vstFolder="" vst3Folder="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.10 SDK" osxArchitecture="32BitUniversal"
-                       isDebug="1" optimisation="1" targetName="BlackAdder"/>
+                       isDebug="1" optimisation="1" targetName="BlackAdder" defines="BLACKADDER_UNIT_TESTS=1"/>
         <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
                        isDebug="0" optimisation="3" targetName="BlackAdder"/>
       </CONFIGURATIONS>

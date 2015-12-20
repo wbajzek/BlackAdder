@@ -15,6 +15,10 @@
 //==============================================================================
 BlackAdderAudioProcessor::BlackAdderAudioProcessor()
 {
+#if BLACKADDER_UNIT_TESTS
+    UnitTestRunner runner;
+    runner.runAllTests();
+#endif
 }
 
 BlackAdderAudioProcessor::~BlackAdderAudioProcessor()
