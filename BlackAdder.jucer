@@ -13,6 +13,8 @@
   <MAINGROUP id="ggQ9Eb" name="BlackAdder">
     <GROUP id="{41C0A1BE-C994-856A-7F32-4EC8EB1D6AE3}" name="Source">
       <GROUP id="{C0B10E68-0E44-4804-D107-41E4D15B67C3}" name="Synthesizer">
+        <FILE id="id2iEh" name="Envelope.cpp" compile="1" resource="0" file="Source/Envelope.cpp"/>
+        <FILE id="n1MMyz" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
         <FILE id="j87JQZ" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
         <FILE id="IUTAZK" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
         <FILE id="UBrjIZ" name="Synthesizer.h" compile="0" resource="0" file="Source/Synthesizer.h"/>

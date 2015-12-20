@@ -11,7 +11,7 @@
 #ifndef OSCILLATOR_H_INCLUDED
 #define OSCILLATOR_H_INCLUDED
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "Synthesizer.h"
 
 class Oscillator
 {

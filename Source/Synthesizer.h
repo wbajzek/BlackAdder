@@ -11,7 +11,9 @@
 #ifndef SYNTHESIZER_H_INCLUDED
 #define SYNTHESIZER_H_INCLUDED
 
+#include "../JuceLibraryCode/JuceHeader.h"
 #include "Oscillator.h"
+#include "Envelope.h"
 
 
 

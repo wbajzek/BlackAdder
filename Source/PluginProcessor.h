@@ -63,6 +63,7 @@ private:
     
     double currentSampleRate = 0.f;
     Oscillator oscillator;
+    Envelope envelope;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BlackAdderAudioProcessor)

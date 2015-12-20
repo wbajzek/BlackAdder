@@ -107,6 +107,8 @@ void BlackAdderAudioProcessor::changeProgramName (int index, const String& newNa
 void BlackAdderAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     currentSampleRate = sampleRate;
+    envelope.setSampleRate(sampleRate);
+    envelope.setSustainLevel(0.125f);
     oscillator.setSampleRate(sampleRate);
     oscillator.setFrequency(440.f);
 }
@@ -121,12 +123,10 @@ void BlackAdderAudioProcessor::releaseResources()
 
 void BlackAdderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    
-    const float level = 0.125f;
-
     for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-        const float currentSample = oscillator.getSample();
-
+        const double currentSample = oscillator.getSample();
+        const double level = envelope.getLevel();
+        
         for (int channel = 0; channel < getNumOutputChannels(); ++channel)
         {
             float* channelData = buffer.getWritePointer (channel);
@@ -134,6 +134,7 @@ void BlackAdderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuff
         }
         
         oscillator.tick();
+        envelope.tick();
     }
 }
 
