@@ -15,6 +15,7 @@
       <GROUP id="{C0B10E68-0E44-4804-D107-41E4D15B67C3}" name="Synthesizer">
         <FILE id="j87JQZ" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
         <FILE id="IUTAZK" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
+        <FILE id="UBrjIZ" name="Synthesizer.h" compile="0" resource="0" file="Source/Synthesizer.h"/>
       </GROUP>
       <FILE id="B4N24Q" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

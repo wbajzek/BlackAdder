@@ -107,14 +107,11 @@ void BlackAdderAudioProcessor::changeProgramName (int index, const String& newNa
 void BlackAdderAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     currentSampleRate = sampleRate;
-    updateAngleDelta();
+    oscillator.setSampleRate(sampleRate);
+    oscillator.setFrequency(440.f);
 }
 
-void BlackAdderAudioProcessor::updateAngleDelta()
-{
-    const double cyclesPerSample = frequency / currentSampleRate;
-    angleDelta = cyclesPerSample * 2.0 * double_Pi;                               
-}
+
 
 void BlackAdderAudioProcessor::releaseResources()
 {
@@ -128,8 +125,7 @@ void BlackAdderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuff
     const float level = 0.125f;
 
     for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-        const float currentSample = (float) std::sin(currentAngle);
-        currentAngle += angleDelta;
+        const float currentSample = oscillator.getSample();
 
         for (int channel = 0; channel < getNumOutputChannels(); ++channel)
         {

@@ -975,6 +975,7 @@
 		F248D5B8FFB79F0AFC7FC25B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AUMIDIEffectBase.cpp; path = "../../../../ownCloud/JUCE/modules/juce_audio_plugin_client/AU/CoreAudioUtilityClasses/AUMIDIEffectBase.cpp"; sourceTree = "SOURCE_ROOT"; };
 		F2725B5BD797C00AF8E376C1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_ComponentPeer.cpp"; path = "../../../../ownCloud/JUCE/modules/juce_gui_basics/windows/juce_ComponentPeer.cpp"; sourceTree = "SOURCE_ROOT"; };
 		F29F8A3252CABBB8793C992E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_DirectoryContentsList.h"; path = "../../../../ownCloud/JUCE/modules/juce_gui_basics/filebrowser/juce_DirectoryContentsList.h"; sourceTree = "SOURCE_ROOT"; };
+		F2B3187383F529DB342A4D32 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Synthesizer.h; path = ../../Source/Synthesizer.h; sourceTree = "SOURCE_ROOT"; };
 		F2C2594C5338EB62ED60B5EF = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_linux_Threads.cpp"; path = "../../../../ownCloud/JUCE/modules/juce_core/native/juce_linux_Threads.cpp"; sourceTree = "SOURCE_ROOT"; };
 		F34B726A4D05C58F5A5C9072 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_CodeDocument.h"; path = "../../../../ownCloud/JUCE/modules/juce_gui_extra/code_editor/juce_CodeDocument.h"; sourceTree = "SOURCE_ROOT"; };
 		F37274F676A4A52D01BEB696 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ColourSelector.h"; path = "../../../../ownCloud/JUCE/modules/juce_gui_extra/misc/juce_ColourSelector.h"; sourceTree = "SOURCE_ROOT"; };
@@ -1016,7 +1017,8 @@
 		FF569A6E21440236D4BDD222 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_LookAndFeel_V2.cpp"; path = "../../../../ownCloud/JUCE/modules/juce_gui_basics/lookandfeel/juce_LookAndFeel_V2.cpp"; sourceTree = "SOURCE_ROOT"; };
 		54BC593DB98DD6F61BF9CCDE = {isa = PBXGroup; children = (
 					C558FC6073745963D414C566,
-					0A2CCA0EC04EAAC39D752078, ); name = Synthesizer; sourceTree = "<group>"; };
+					0A2CCA0EC04EAAC39D752078,
+					F2B3187383F529DB342A4D32, ); name = Synthesizer; sourceTree = "<group>"; };
 		A2DCDC1F6EE01255EC25E81A = {isa = PBXGroup; children = (
 					54BC593DB98DD6F61BF9CCDE,
 					075E5CF492D379825505694B,

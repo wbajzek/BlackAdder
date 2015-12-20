@@ -16,15 +16,20 @@
 class Oscillator
 {
 public:
-    void setSampleRate(float newSampleRate);
-    float getSampleRate();
+    void setSampleRate(double newSampleRate);
+    double getSampleRate();
     
-    void setFrequency(float frequency);
-    float getFrequency();
+    void setFrequency(double frequency);
+    double getFrequency();
+    
+    double getSample();
 
 private:
-    float sampleRate;
-    float frequency;
+    double sampleRate = 0.f;
+    double frequency = 0.f;
+    double currentAngle = 0.f;
+    double angleDelta = 0.f;
+    
 };
 
 

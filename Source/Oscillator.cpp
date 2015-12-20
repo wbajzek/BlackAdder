@@ -10,25 +10,34 @@
 
 #include "Oscillator.h"
 
-void Oscillator::setSampleRate(float newSampleRate)
+void Oscillator::setSampleRate(double newSampleRate)
 {
     sampleRate = newSampleRate;
 }
 
-float Oscillator::getSampleRate()
+double Oscillator::getSampleRate()
 {
     return sampleRate;
 }
 
-void Oscillator::setFrequency(float newFrequency)
+void Oscillator::setFrequency(double newFrequency)
 {
     frequency = newFrequency;
+    const double cyclesPerSample = frequency / sampleRate;
+    angleDelta = cyclesPerSample * 2.0 * double_Pi;
 }
 
-float Oscillator::getFrequency()
+double Oscillator::getFrequency()
 {
     return frequency;
 }
+
+double Oscillator::getSample()
+{
+    currentAngle += angleDelta;
+    return (double)std::sin(currentAngle);
+}
+
 
 #if BLACKADDER_UNIT_TESTS
 class OscillatorTests : public UnitTest
@@ -41,14 +50,17 @@ public:
         Oscillator myOscillator;
         beginTest("Oscillator");
         
-        float sampleRate = 44100.f;
-        float frequency = 440.f;
+        double sampleRate = 44100.f;
+        double frequency = 440.f;
         
         myOscillator.setSampleRate(sampleRate);
         expect(myOscillator.getSampleRate() == sampleRate);
 
         myOscillator.setFrequency(frequency);
         expect(myOscillator.getFrequency() == frequency);
+        
+        // not a very good test. 
+        expect(myOscillator.getSample() != 0.f);
         
     }
 };

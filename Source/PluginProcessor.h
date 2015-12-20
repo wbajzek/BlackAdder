@@ -12,6 +12,7 @@
 #define PLUGINPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "Synthesizer.h"
 
 
 //==============================================================================
@@ -60,12 +61,8 @@ public:
 
 private:
     
-    double currentSampleRate = 0.0  ;
-    double currentAngle = 0.0;
-    double angleDelta = 0.0;
-    double frequency = 440.0;
-
-    void updateAngleDelta();
+    double currentSampleRate = 0.f;
+    Oscillator oscillator;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BlackAdderAudioProcessor)
