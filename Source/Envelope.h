@@ -13,9 +13,18 @@
 
 #include "Synthesizer.h"
 
+enum EnvelopeState {
+    ATTACK_STATE,
+    DECAY_STATE,
+    SUSTAIN_STATE,
+    RELEASE_STATE,
+    DEAD_STATE,
+};
+
 class Envelope
 {
 public:
+    
     void setSampleRate(double newSampleRate);
     double getSampleRate();
     
@@ -24,16 +33,31 @@ public:
     void setReleaseSeconds(double seconds);
     void setSustainLevel(double level);
     
+    void trigger();
+    void triggerRelease();
+    void triggerDead();
+    
     void tick();
     double getLevel();
+    int getCurrentState();
     
 private:
+    void triggerDecay();
+    void triggerSustain();
+    
     double sampleRate = 0.f;
 
+    bool gateIsOn = false;
+    
     double attackSeconds = 0.f;
     double decaySeconds = 0.f;
     double sustainLevel = 1.f;
     double releaseSeconds = 0.5;
+    
+    double currentLevel = 0.f;
+    
+    int envelopeState = DEAD_STATE;
+    
 };
 
 

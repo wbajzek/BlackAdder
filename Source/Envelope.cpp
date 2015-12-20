@@ -41,11 +41,50 @@ void Envelope::setReleaseSeconds(double seconds)
 }
 
 void Envelope::tick() {
+    if (envelopeState != DEAD_STATE) {
+        if (currentLevel >= 1.0)
+            triggerDecay();
+        else if (envelopeState == DECAY_STATE && currentLevel <= sustainLevel)
+            triggerSustain();
+        else if (envelopeState != ATTACK_STATE && currentLevel <= 0.001)
+            triggerDead();
+    }
+}
+
+int Envelope::getCurrentState()
+{
+    return envelopeState;
 }
 
 double Envelope::getLevel()
 {
     return sustainLevel;
+}
+
+void Envelope::trigger()
+{
+    envelopeState = ATTACK_STATE;
+}
+
+void Envelope::triggerDecay()
+{
+    envelopeState = DECAY_STATE;
+}
+
+void Envelope::triggerSustain()
+{
+    currentLevel = sustainLevel;
+}
+
+void Envelope::triggerRelease()
+{
+    envelopeState = RELEASE_STATE;
+}
+
+void Envelope::triggerDead()
+{
+    envelopeState = DEAD_STATE;
+    currentLevel = 0.0;
 }
 
 #if BLACKADDER_UNIT_TESTS
@@ -56,9 +95,9 @@ public:
     
     void runTest() override
     {
-        double seconds = 1.0f;
+        double seconds = 1.f;
         double level = 0.8f;
-        double sampleRate = 44100.f;
+        double sampleRate = 1.f;
 
         Envelope myEnvelope;
         beginTest("Envelope");
@@ -71,9 +110,24 @@ public:
         myEnvelope.setSustainLevel(level);
         myEnvelope.setReleaseSeconds(seconds);
         
+        expect(myEnvelope.getCurrentState() == DEAD_STATE);
+        myEnvelope.trigger();
+        expect(myEnvelope.getCurrentState() == ATTACK_STATE);
+        expect(myEnvelope.getLevel() == 0.f);
         myEnvelope.tick();
-        
+        expect(myEnvelope.getCurrentState() == DECAY_STATE);
+        expect(myEnvelope.getLevel() == 1.f);
+        myEnvelope.tick();
+        expect(myEnvelope.getCurrentState() == SUSTAIN_STATE);
         expect(myEnvelope.getLevel() == level);
+        myEnvelope.tick();
+        expect(myEnvelope.getCurrentState() == SUSTAIN_STATE);
+        expect(myEnvelope.getLevel() == level);
+        myEnvelope.triggerRelease();
+        expect(myEnvelope.getCurrentState() == RELEASE_STATE);
+        myEnvelope.tick();
+        expect(myEnvelope.getLevel() == 0.f);
+        expect(myEnvelope.getCurrentState() == DEAD_STATE);
     }
 };
 
