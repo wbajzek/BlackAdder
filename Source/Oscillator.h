@@ -22,6 +22,7 @@ public:
     void setFrequency(double frequency);
     double getFrequency();
     
+    void tick();
     double getSample();
 
 private:

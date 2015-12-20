@@ -32,11 +32,16 @@ double Oscillator::getFrequency()
     return frequency;
 }
 
-double Oscillator::getSample()
+void Oscillator::tick()
 {
     currentAngle += angleDelta;
+}
+
+double Oscillator::getSample()
+{
     return (double)std::sin(currentAngle);
 }
+
 
 
 #if BLACKADDER_UNIT_TESTS
@@ -60,6 +65,8 @@ public:
         expect(myOscillator.getFrequency() == frequency);
         
         // not a very good test. 
+        expect(myOscillator.getSample() == 0.f);
+        myOscillator.tick();
         expect(myOscillator.getSample() != 0.f);
         
     }

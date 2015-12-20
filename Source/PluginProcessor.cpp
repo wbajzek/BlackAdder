@@ -132,6 +132,8 @@ void BlackAdderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuff
             float* channelData = buffer.getWritePointer (channel);
             channelData[sample] = currentSample * level;
         }
+        
+        oscillator.tick();
     }
 }
 
