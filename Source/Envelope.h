@@ -13,7 +13,7 @@
 
 #include "Synthesizer.h"
 
-enum EnvelopeState {
+enum envelopeState {
     ATTACK_STATE,
     DECAY_STATE,
     SUSTAIN_STATE,
@@ -44,19 +44,27 @@ public:
 private:
     void triggerDecay();
     void triggerSustain();
+    inline double getSegmentCoefficient(double startLevel, double endLevel, int durationInSamples) const;
+    void convertSecondsToSamples();
     
     double sampleRate = 0.f;
-
-    bool gateIsOn = false;
     
     double attackSeconds = 0.f;
     double decaySeconds = 0.f;
     double sustainLevel = 1.f;
     double releaseSeconds = 0.5;
     
+    double level = 0;
+    double coefficient = 0;
+    double increment = 0;
+    
+    unsigned long attackSamples = 0;
+    unsigned long decaySamples = 0;
+    unsigned long releaseSamples = 0;
+    
     double currentLevel = 0.f;
     
-    int envelopeState = DEAD_STATE;
+    int state = DEAD_STATE;
     
 };
 

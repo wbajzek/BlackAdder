@@ -10,9 +10,17 @@
 
 #include "Envelope.h"
 
+void Envelope::convertSecondsToSamples()
+{
+    attackSamples = sampleRate * attackSeconds;
+    decaySamples = sampleRate * decaySeconds;
+    releaseSamples = sampleRate * releaseSeconds;
+}
+
 void Envelope::setSampleRate(double newSampleRate)
 {
     sampleRate = newSampleRate;
+    convertSecondsToSamples();
 }
 
 double Envelope::getSampleRate()
@@ -23,11 +31,13 @@ double Envelope::getSampleRate()
 void Envelope::setAttackSeconds(double seconds)
 {
     attackSeconds = seconds;
+    convertSecondsToSamples();
 }
 
 void Envelope::setDecaySeconds(double seconds)
 {
     decaySeconds = seconds;
+    convertSecondsToSamples();
 }
 
 void Envelope::setSustainLevel(double level)
@@ -38,52 +48,78 @@ void Envelope::setSustainLevel(double level)
 void Envelope::setReleaseSeconds(double seconds)
 {
     releaseSeconds = seconds;
+    convertSecondsToSamples();
 }
 
 void Envelope::tick() {
-    if (envelopeState != DEAD_STATE) {
-        if (currentLevel >= 1.0)
+    if (state != DEAD_STATE) {
+        level += increment + (coefficient * level);
+        if (level >= 1.0)
             triggerDecay();
-        else if (envelopeState == DECAY_STATE && currentLevel <= sustainLevel)
+        else if (state == DECAY_STATE && level <= sustainLevel)
             triggerSustain();
-        else if (envelopeState != ATTACK_STATE && currentLevel <= 0.001)
+        else if (state != ATTACK_STATE && level <= 0.001)
             triggerDead();
     }
 }
 
+inline double Envelope::getSegmentCoefficient(double startLevel, double endLevel, int durationInSamples) const
+{
+    // add a tiny fudge factor when calculating because it doesn't work when levels are exactly 0.0
+    return (log((endLevel + 0.0001)) - log(startLevel + 0.0001)) / durationInSamples;
+}
+
 int Envelope::getCurrentState()
 {
-    return envelopeState;
+    return state;
 }
 
 double Envelope::getLevel()
 {
-    return sustainLevel;
+    return level;
 }
 
 void Envelope::trigger()
 {
-    envelopeState = ATTACK_STATE;
+    state = ATTACK_STATE;
+    if (attackSamples == 0)
+    {
+        level = 1.0;
+        increment = 0.0;
+        triggerDecay();
+    }
+    else
+    {
+        increment = 1.0 / attackSamples;
+        coefficient = 0.0;
+    }
 }
 
 void Envelope::triggerDecay()
 {
-    envelopeState = DECAY_STATE;
+    state = DECAY_STATE;
+    increment = 0.0;
+    coefficient = getSegmentCoefficient(level, sustainLevel, decaySamples);
 }
 
 void Envelope::triggerSustain()
 {
-    currentLevel = sustainLevel;
+    state = SUSTAIN_STATE;
+    level = sustainLevel;
+    increment = 0.0;
+    coefficient = 0.0;
 }
 
 void Envelope::triggerRelease()
 {
-    envelopeState = RELEASE_STATE;
+    state = RELEASE_STATE;
+    increment = 0.0;
+    coefficient = getSegmentCoefficient(level, 0.0, releaseSamples);
 }
 
 void Envelope::triggerDead()
 {
-    envelopeState = DEAD_STATE;
+    state = DEAD_STATE;
     currentLevel = 0.0;
 }
 
@@ -98,7 +134,7 @@ public:
         double seconds = 1.f;
         double level = 0.8f;
         double sampleRate = 1.f;
-
+        double currentLevel;
         Envelope myEnvelope;
         beginTest("Envelope");
         
@@ -113,20 +149,29 @@ public:
         expect(myEnvelope.getCurrentState() == DEAD_STATE);
         myEnvelope.trigger();
         expect(myEnvelope.getCurrentState() == ATTACK_STATE);
-        expect(myEnvelope.getLevel() == 0.f);
+        currentLevel = myEnvelope.getLevel();
+
         myEnvelope.tick();
+        expect(myEnvelope.getLevel() > currentLevel);
         expect(myEnvelope.getCurrentState() == DECAY_STATE);
-        expect(myEnvelope.getLevel() == 1.f);
+        currentLevel = myEnvelope.getLevel();
+
+        myEnvelope.tick();
+        expect(myEnvelope.getLevel() < currentLevel);
+        myEnvelope.tick();
+
+        expect(myEnvelope.getCurrentState() == SUSTAIN_STATE);
+        expect(myEnvelope.getLevel() == level);
+        
         myEnvelope.tick();
         expect(myEnvelope.getCurrentState() == SUSTAIN_STATE);
         expect(myEnvelope.getLevel() == level);
-        myEnvelope.tick();
-        expect(myEnvelope.getCurrentState() == SUSTAIN_STATE);
-        expect(myEnvelope.getLevel() == level);
+        
         myEnvelope.triggerRelease();
         expect(myEnvelope.getCurrentState() == RELEASE_STATE);
+
         myEnvelope.tick();
-        expect(myEnvelope.getLevel() == 0.f);
+        expect(myEnvelope.getLevel() <= 0.f);
         expect(myEnvelope.getCurrentState() == DEAD_STATE);
     }
 };
