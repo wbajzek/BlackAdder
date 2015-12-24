@@ -107,10 +107,21 @@ void BlackAdderAudioProcessor::changeProgramName (int index, const String& newNa
 void BlackAdderAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     currentSampleRate = sampleRate;
-    envelope.setSampleRate(sampleRate);
-    envelope.setSustainLevel(0.125f);
-    oscillator.setSampleRate(sampleRate);
-    oscillator.setFrequency(440.f);
+    for (int i=0; i < MAX_ENVELOPES; ++i)
+    {
+        envelopes[i].setSampleRate(sampleRate);
+        envelopes[i].setAttackSeconds(10);
+        envelopes[i].setDecaySeconds(10);
+        envelopes[i].setSustainLevel(0.125f);
+        envelopes[i].setReleaseSeconds(10);
+        envelopes[i].trigger();
+        
+    }
+    for (int i=0; i < MAX_ENVELOPES; ++i)
+    {
+        oscillators[i].setSampleRate(sampleRate);
+        oscillators[i].setFrequency(440.f);
+    }
 }
 
 
@@ -124,18 +135,25 @@ void BlackAdderAudioProcessor::releaseResources()
 void BlackAdderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
     for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-        const double currentSample = oscillator.getSample();
-        const double level = envelope.getLevel();
-        
-        for (int channel = 0; channel < getNumOutputChannels(); ++channel)
+        for (int i = 0; i < MAX_OSCILLATORS; ++i)
         {
-            float* channelData = buffer.getWritePointer (channel);
-            channelData[sample] = currentSample * level;
+            const double currentSample = oscillators[i].getSample();
+            const double level = envelopes[0].getLevel();
+            
+            for (int channel = 0; channel < getNumOutputChannels(); ++channel)
+            {
+                float* channelData = buffer.getWritePointer (channel);
+                channelData[sample] += currentSample * level;
+            }
+            
+            oscillators[i].tick();
         }
-        
-        oscillator.tick();
-        envelope.tick();
+        for (int i = 0; i < MAX_ENVELOPES; ++i)
+            envelopes[i].tick();
     }
+    if (envelopes[0].getCurrentState() == DEAD_STATE)
+        for (int i = 0; i < MAX_ENVELOPES; ++i)
+            envelopes[0].trigger();
 }
 
 //==============================================================================
