@@ -13,6 +13,7 @@
 void Oscillator::setSampleRate(double newSampleRate)
 {
     sampleRate = newSampleRate;
+    freqTL = WAVE_TABLE_LENGTH / sampleRate;
 }
 
 double Oscillator::getSampleRate()
@@ -23,8 +24,7 @@ double Oscillator::getSampleRate()
 void Oscillator::setFrequency(double newFrequency)
 {
     frequency = newFrequency;
-    const double cyclesPerSample = frequency / sampleRate;
-    angleDelta = cyclesPerSample * 2.0 * double_Pi;
+    increment = freqTL * frequency;
 }
 
 double Oscillator::getFrequency()
@@ -34,12 +34,13 @@ double Oscillator::getFrequency()
 
 void Oscillator::tick()
 {
-    currentAngle += angleDelta;
+    if ((index += increment) >= WAVE_TABLE_LENGTH)
+        index -= WAVE_TABLE_LENGTH;
 }
 
 double Oscillator::getSample()
 {
-    return (double)std::sin(currentAngle);
+    return sineWaveTable[index];
 }
 
 

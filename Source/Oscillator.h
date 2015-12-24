@@ -12,6 +12,7 @@
 #define OSCILLATOR_H_INCLUDED
 
 #include "Synthesizer.h"
+#include "SineWaveTable.h"
 
 class Oscillator
 {
@@ -28,8 +29,9 @@ public:
 private:
     double sampleRate = 0.f;
     double frequency = 0.f;
-    double currentAngle = 0.f;
-    double angleDelta = 0.f;
+    int index = 0;
+    int freqTL = 0;
+    double increment = 0;
     
 };
 

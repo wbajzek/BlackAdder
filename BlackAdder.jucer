@@ -17,6 +17,7 @@
         <FILE id="n1MMyz" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
         <FILE id="j87JQZ" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
         <FILE id="IUTAZK" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
+        <FILE id="cRpy2N" name="SineWaveTable.h" compile="0" resource="0" file="Source/SineWaveTable.h"/>
         <FILE id="UBrjIZ" name="Synthesizer.h" compile="0" resource="0" file="Source/Synthesizer.h"/>
       </GROUP>
       <FILE id="B4N24Q" name="PluginProcessor.cpp" compile="1" resource="0"
