@@ -19,5 +19,10 @@ selectable per partial, rather than one for each partial. For 8 voices, this mea
 which means a total of 256 oscillators, but in my previous attempt, the envelopes
 seemed to be a bigger bottleneck than the oscillators.
 
+Also, since performance was such a killer of an issue before, I am beginning this
+project by making a dumb plugin which has 256 oscillators and 36 envelopes going
+simultaneously, so I can focus on achieving viable performance before sinking too
+much time into feature development.
+
 I have a [Trello board](https://trello.com/b/HUgnYxis/additive-synthesizer) for
 this project if you would like to track my progress and/or contribute.
