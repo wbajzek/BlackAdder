@@ -34,8 +34,7 @@ double Oscillator::getFrequency()
 
 void Oscillator::tick()
 {
-    if ((index += increment) >= WAVE_TABLE_LENGTH)
-        index -= WAVE_TABLE_LENGTH;
+    index = (index += increment) % WAVE_TABLE_LENGTH;
 }
 
 double Oscillator::getSample()

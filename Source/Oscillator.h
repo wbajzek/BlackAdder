@@ -29,7 +29,7 @@ public:
 private:
     double sampleRate = 0.f;
     double frequency = 0.f;
-    int index = 0;
+    unsigned long index = 0;
     int freqTL = 0;
     double increment = 0;
     
