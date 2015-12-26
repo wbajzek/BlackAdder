@@ -135,25 +135,19 @@ void BlackAdderAudioProcessor::releaseResources()
 void BlackAdderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
     for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-        for (int i = 0; i < MAX_OSCILLATORS; ++i)
-        {
-            const double currentSample = oscillators[i].getSample();
-            const double level = envelopes[0].getLevel();
-            
-            for (int channel = 0; channel < getNumOutputChannels(); ++channel)
-            {
-                float* channelData = buffer.getWritePointer (channel);
-                channelData[sample] += currentSample * level;
-            }
-            
+        for (int i = 0; i < MAX_OSCILLATORS; ++i) {
+            buffer.addSample(0, sample, oscillators[i].getSample() * envelopes[0].getLevel());
             oscillators[i].tick();
         }
+        
         for (int i = 0; i < MAX_ENVELOPES; ++i)
             envelopes[i].tick();
     }
     if (envelopes[0].getCurrentState() == DEAD_STATE)
         for (int i = 0; i < MAX_ENVELOPES; ++i)
             envelopes[0].trigger();
+    
+    buffer.copyFrom(1, 0, buffer, 0, 0, buffer.getNumSamples());
 }
 
 //==============================================================================
