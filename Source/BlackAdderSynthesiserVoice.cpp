@@ -40,10 +40,12 @@ void BlackAdderSynthesiserVoice::startNote (const int midiNoteNumber, const floa
 void BlackAdderSynthesiserVoice::stopNote (float velocity, const bool allowTailOff)
 {
     isActive = false;
-
-    if (envelopes[0].getCurrentState() != DEAD_STATE)
+    if (allowTailOff)
         for (int i = 0; i < MAX_PARTIALS; ++i)
             envelopes[i].triggerRelease();
+    else
+        for (int i = 0; i < MAX_PARTIALS; ++i)
+            envelopes[i].triggerDead();
 }
 
 void BlackAdderSynthesiserVoice::pitchWheelMoved (const int newValue)
