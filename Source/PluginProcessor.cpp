@@ -128,7 +128,11 @@ void BlackAdderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuff
     int numSamples = buffer.getNumSamples();
     keyboardState.processNextMidiBuffer(midiMessages, 0, numSamples, true);
     synth.renderNextBlock(buffer, midiMessages, 0, numSamples);
-    buffer.copyFrom(1, 0, buffer, 0, 0, buffer.getNumSamples());
+
+    int numChannels = buffer.getNumChannels();
+    if (numChannels > 1)
+        for (int i = 1; i < numChannels; ++i)
+            buffer.copyFrom(i, 0, buffer, 0, 0, numSamples);
 }
 
 //==============================================================================
