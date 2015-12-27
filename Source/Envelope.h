@@ -33,19 +33,19 @@ public:
     void setReleaseSeconds(float seconds);
     void setSustainLevel(float level);
     
-    void trigger();
-    void triggerRelease();
-    void triggerDead();
+    void trigger() noexcept;
+    void triggerRelease() noexcept;
+    void triggerDead() noexcept;
     
-    void tick();
-    float getLevel();
-    int getCurrentState();
-    bool isActive() const;
+    void tick() noexcept;
+    float getLevel() const noexcept;
+    int getCurrentState() const noexcept;
+    bool isActive() const noexcept;
     
 private:
-    void triggerDecay();
-    void triggerSustain();
-    inline float getSegmentCoefficient(float startLevel, float endLevel, int durationInSamples) const;
+    void triggerDecay() noexcept;
+    void triggerSustain() noexcept;
+    inline float getSegmentCoefficient(float startLevel, float endLevel, int durationInSamples) const noexcept;
     void convertSecondsToSamples();
     
     float sampleRate = 0.f;

@@ -51,7 +51,8 @@ void Envelope::setReleaseSeconds(float seconds)
     convertSecondsToSamples();
 }
 
-void Envelope::tick() {
+void Envelope::tick() noexcept
+{
     if (state != DEAD_STATE) {
         level += increment + (coefficient * level);
         if (level >= 1.0)
@@ -63,23 +64,23 @@ void Envelope::tick() {
     }
 }
 
-inline float Envelope::getSegmentCoefficient(float startLevel, float endLevel, int durationInSamples) const
+inline float Envelope::getSegmentCoefficient(float startLevel, float endLevel, int durationInSamples) const noexcept
 {
     // add a tiny fudge factor when calculating because it doesn't work when levels are exactly 0.0
     return (log((endLevel + 0.0001)) - log(startLevel + 0.0001)) / durationInSamples;
 }
 
-int Envelope::getCurrentState()
+int Envelope::getCurrentState() const noexcept
 {
     return state;
 }
 
-float Envelope::getLevel()
+float Envelope::getLevel() const noexcept
 {
     return level;
 }
 
-void Envelope::trigger()
+void Envelope::trigger() noexcept
 {
     state = ATTACK_STATE;
     if (attackSamples == 0)
@@ -95,14 +96,14 @@ void Envelope::trigger()
     }
 }
 
-void Envelope::triggerDecay()
+void Envelope::triggerDecay() noexcept
 {
     state = DECAY_STATE;
     increment = 0.0;
     coefficient = getSegmentCoefficient(level, sustainLevel, decaySamples);
 }
 
-void Envelope::triggerSustain()
+void Envelope::triggerSustain() noexcept
 {
     state = SUSTAIN_STATE;
     level = sustainLevel;
@@ -110,14 +111,14 @@ void Envelope::triggerSustain()
     coefficient = 0.0;
 }
 
-void Envelope::triggerRelease()
+void Envelope::triggerRelease() noexcept
 {
     state = RELEASE_STATE;
     increment = 0.0;
     coefficient = getSegmentCoefficient(level, 0.0, releaseSamples);
 }
 
-void Envelope::triggerDead()
+void Envelope::triggerDead() noexcept
 {
     state = DEAD_STATE;
     currentLevel = 0.0;
@@ -176,7 +177,7 @@ public:
     }
 };
 
-bool Envelope::isActive() const
+bool Envelope::isActive() const noexcept
 {
     return (state != DEAD_STATE);
 }

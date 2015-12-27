@@ -33,13 +33,13 @@ float Oscillator::getFrequency()
     return frequency;
 }
 
-void Oscillator::tick()
+void Oscillator::tick() noexcept
 {
     index += increment;
     index %= WAVE_TABLE_LENGTH;
 }
 
-float Oscillator::getSample()
+float Oscillator::getSample() const noexcept
 {
     return (frequency >= nyquist) ? 0.0 : sineWaveTable[index];
 }

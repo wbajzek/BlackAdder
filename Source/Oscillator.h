@@ -23,8 +23,8 @@ public:
     void setFrequency(float frequency);
     float getFrequency();
     
-    void tick();
-    float getSample();
+    void tick() noexcept;
+    float getSample() const noexcept;
 
 private:
     float sampleRate = 0.f;
