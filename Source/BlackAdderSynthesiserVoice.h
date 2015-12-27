@@ -33,9 +33,9 @@ public:
 private:
     
     double currentSampleRate = 0.f;
-    Oscillator oscillators[MAX_OSCILLATORS];
-    Envelope envelopes[MAX_OSCILLATORS];
-    float levels[MAX_OSCILLATORS];
+    Oscillator oscillators[MAX_PARTIALS];
+    Envelope envelopes[MAX_PARTIALS];
+    float levels[MAX_PARTIALS];
     bool isActive = false;
     
     //==============================================================================

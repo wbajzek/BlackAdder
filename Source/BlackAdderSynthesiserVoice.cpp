@@ -12,8 +12,8 @@
 
 BlackAdderSynthesiserVoice::BlackAdderSynthesiserVoice()
 {
-    for (int i = 0; i < MAX_OSCILLATORS; ++i)
-        levels[i] = ((float)MAX_OSCILLATORS - i) / (float)MAX_OSCILLATORS;
+    for (int i = 0; i < MAX_PARTIALS; ++i)
+        levels[i] = ((float)MAX_PARTIALS - i) / (float)MAX_PARTIALS;
 }
 
 BlackAdderSynthesiserVoice::~BlackAdderSynthesiserVoice()
@@ -30,7 +30,7 @@ void BlackAdderSynthesiserVoice::startNote (const int midiNoteNumber, const floa
 {
     isActive = true;
     float baseFrequency = MidiMessage::getMidiNoteInHertz(midiNoteNumber);
-    for (int i = 0; i < MAX_OSCILLATORS; ++i)
+    for (int i = 0; i < MAX_PARTIALS; ++i)
     {
         envelopes[i].trigger();
         oscillators[i].setFrequency(baseFrequency * (i + 1));
@@ -42,7 +42,7 @@ void BlackAdderSynthesiserVoice::stopNote (float velocity, const bool allowTailO
     isActive = false;
 
     if (envelopes[0].getCurrentState() != DEAD_STATE)
-        for (int i = 0; i < MAX_ENVELOPES; ++i)
+        for (int i = 0; i < MAX_PARTIALS; ++i)
             envelopes[i].triggerRelease();
 }
 
@@ -61,7 +61,7 @@ void BlackAdderSynthesiserVoice::renderNextBlock (AudioSampleBuffer& buffer, int
     float *output = buffer.getWritePointer(0);
     for (int sample = startSample; sample < buffer.getNumSamples(); ++sample) {
         bool isDead = true;
-        for (int i = 0; i < MAX_OSCILLATORS; ++i) {
+        for (int i = 0; i < MAX_PARTIALS; ++i) {
             output[sample] += oscillators[i].getSample() * envelopes[i].getLevel() * levels[i] * (1.0 / MAX_VOICES);
             oscillators[i].tick();
             envelopes[i].tick();
@@ -81,7 +81,7 @@ void BlackAdderSynthesiserVoice::aftertouchChanged (int newAftertouchValue)
 
 void BlackAdderSynthesiserVoice::setCurrentPlaybackSampleRate (double newRate)
 {
-    for (int i=0; i < MAX_OSCILLATORS; ++i)
+    for (int i=0; i < MAX_PARTIALS; ++i)
     {
         envelopes[i].setSampleRate(newRate);
         envelopes[i].setAttackSeconds(0);
