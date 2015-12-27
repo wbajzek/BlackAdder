@@ -134,9 +134,10 @@ void BlackAdderAudioProcessor::releaseResources()
 
 void BlackAdderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
+    float *output = buffer.getWritePointer(0);
     for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
         for (int i = 0; i < MAX_OSCILLATORS; ++i) {
-            buffer.addSample(0, sample, oscillators[i].getSample() * envelopes[0].getLevel());
+            output[sample] += oscillators[i].getSample() * envelopes[0].getLevel();
             oscillators[i].tick();
         }
         
