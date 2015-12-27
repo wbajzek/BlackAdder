@@ -13,7 +13,7 @@
 
 #define WAVE_TABLE_LENGTH 65536
 
-const double sineWaveTable[] = {
+const float sineWaveTable[] = {
 0.0,
 9.587379909597734e-05,
 0.0001917475973107033,

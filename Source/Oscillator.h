@@ -17,21 +17,21 @@
 class Oscillator
 {
 public:
-    void setSampleRate(double newSampleRate);
-    double getSampleRate();
+    void setSampleRate(float newSampleRate);
+    float getSampleRate();
     
-    void setFrequency(double frequency);
-    double getFrequency();
+    void setFrequency(float frequency);
+    float getFrequency();
     
     void tick();
-    double getSample();
+    float getSample();
 
 private:
-    double sampleRate = 0.f;
-    double frequency = 0.f;
+    float sampleRate = 0.f;
+    float frequency = 0.f;
     unsigned long index = 0;
     int freqTL = 0;
-    double increment = 0;
+    float increment = 0;
     
 };
 

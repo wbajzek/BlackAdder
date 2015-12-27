@@ -25,44 +25,44 @@ class Envelope
 {
 public:
     
-    void setSampleRate(double newSampleRate);
-    double getSampleRate();
+    void setSampleRate(float newSampleRate);
+    float getSampleRate();
     
-    void setAttackSeconds(double seconds);
-    void setDecaySeconds(double seconds);
-    void setReleaseSeconds(double seconds);
-    void setSustainLevel(double level);
+    void setAttackSeconds(float seconds);
+    void setDecaySeconds(float seconds);
+    void setReleaseSeconds(float seconds);
+    void setSustainLevel(float level);
     
     void trigger();
     void triggerRelease();
     void triggerDead();
     
     void tick();
-    double getLevel();
+    float getLevel();
     int getCurrentState();
     
 private:
     void triggerDecay();
     void triggerSustain();
-    inline double getSegmentCoefficient(double startLevel, double endLevel, int durationInSamples) const;
+    inline float getSegmentCoefficient(float startLevel, float endLevel, int durationInSamples) const;
     void convertSecondsToSamples();
     
-    double sampleRate = 0.f;
+    float sampleRate = 0.f;
     
-    double attackSeconds = 0.f;
-    double decaySeconds = 0.f;
-    double sustainLevel = 1.f;
-    double releaseSeconds = 0.5;
+    float attackSeconds = 0.f;
+    float decaySeconds = 0.f;
+    float sustainLevel = 1.f;
+    float releaseSeconds = 0.5;
     
-    double level = 0;
-    double coefficient = 0;
-    double increment = 0;
+    float level = 0;
+    float coefficient = 0;
+    float increment = 0;
     
     unsigned long attackSamples = 0;
     unsigned long decaySamples = 0;
     unsigned long releaseSamples = 0;
     
-    double currentLevel = 0.f;
+    float currentLevel = 0.f;
     
     int state = DEAD_STATE;
     

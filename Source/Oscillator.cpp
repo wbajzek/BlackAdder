@@ -10,34 +10,35 @@
 
 #include "Oscillator.h"
 
-void Oscillator::setSampleRate(double newSampleRate)
+void Oscillator::setSampleRate(float newSampleRate)
 {
     sampleRate = newSampleRate;
     freqTL = WAVE_TABLE_LENGTH / sampleRate;
 }
 
-double Oscillator::getSampleRate()
+float Oscillator::getSampleRate()
 {
     return sampleRate;
 }
 
-void Oscillator::setFrequency(double newFrequency)
+void Oscillator::setFrequency(float newFrequency)
 {
     frequency = newFrequency;
     increment = freqTL * frequency;
 }
 
-double Oscillator::getFrequency()
+float Oscillator::getFrequency()
 {
     return frequency;
 }
 
 void Oscillator::tick()
 {
-    index = (index += increment) % WAVE_TABLE_LENGTH;
+    index += increment;
+    index %= WAVE_TABLE_LENGTH;
 }
 
-double Oscillator::getSample()
+float Oscillator::getSample()
 {
     return sineWaveTable[index];
 }
@@ -55,8 +56,8 @@ public:
         Oscillator myOscillator;
         beginTest("Oscillator");
         
-        double sampleRate = 44100.f;
-        double frequency = 440.f;
+        float sampleRate = 44100.f;
+        float frequency = 440.f;
         
         myOscillator.setSampleRate(sampleRate);
         expect(myOscillator.getSampleRate() == sampleRate);

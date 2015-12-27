@@ -17,35 +17,35 @@ void Envelope::convertSecondsToSamples()
     releaseSamples = sampleRate * releaseSeconds;
 }
 
-void Envelope::setSampleRate(double newSampleRate)
+void Envelope::setSampleRate(float newSampleRate)
 {
     sampleRate = newSampleRate;
     convertSecondsToSamples();
 }
 
-double Envelope::getSampleRate()
+float Envelope::getSampleRate()
 {
     return sampleRate;
 }
 
-void Envelope::setAttackSeconds(double seconds)
+void Envelope::setAttackSeconds(float seconds)
 {
     attackSeconds = seconds;
     convertSecondsToSamples();
 }
 
-void Envelope::setDecaySeconds(double seconds)
+void Envelope::setDecaySeconds(float seconds)
 {
     decaySeconds = seconds;
     convertSecondsToSamples();
 }
 
-void Envelope::setSustainLevel(double level)
+void Envelope::setSustainLevel(float level)
 {
     sustainLevel = level;
 }
 
-void Envelope::setReleaseSeconds(double seconds)
+void Envelope::setReleaseSeconds(float seconds)
 {
     releaseSeconds = seconds;
     convertSecondsToSamples();
@@ -63,7 +63,7 @@ void Envelope::tick() {
     }
 }
 
-inline double Envelope::getSegmentCoefficient(double startLevel, double endLevel, int durationInSamples) const
+inline float Envelope::getSegmentCoefficient(float startLevel, float endLevel, int durationInSamples) const
 {
     // add a tiny fudge factor when calculating because it doesn't work when levels are exactly 0.0
     return (log((endLevel + 0.0001)) - log(startLevel + 0.0001)) / durationInSamples;
@@ -74,7 +74,7 @@ int Envelope::getCurrentState()
     return state;
 }
 
-double Envelope::getLevel()
+float Envelope::getLevel()
 {
     return level;
 }
@@ -131,10 +131,10 @@ public:
     
     void runTest() override
     {
-        double seconds = 1.f;
-        double level = 0.8f;
-        double sampleRate = 1.f;
-        double currentLevel;
+        float seconds = 1.f;
+        float level = 0.8f;
+        float sampleRate = 1.f;
+        float currentLevel;
         Envelope myEnvelope;
         beginTest("Envelope");
         
