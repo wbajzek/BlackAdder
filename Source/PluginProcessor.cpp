@@ -19,6 +19,10 @@ BlackAdderAudioProcessor::BlackAdderAudioProcessor()
     UnitTestRunner runner;
     runner.runAllTests();
 #endif
+    for (int i = 0; i < MAX_VOICES; i++)
+        synth.addVoice(new BlackAdderSynthesiserVoice());
+    synth.addSound(new BlackAdderSynthesiserSound());
+    
 }
 
 BlackAdderAudioProcessor::~BlackAdderAudioProcessor()
@@ -107,21 +111,7 @@ void BlackAdderAudioProcessor::changeProgramName (int index, const String& newNa
 void BlackAdderAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     currentSampleRate = sampleRate;
-    for (int i=0; i < MAX_ENVELOPES; ++i)
-    {
-        envelopes[i].setSampleRate(sampleRate);
-        envelopes[i].setAttackSeconds(10);
-        envelopes[i].setDecaySeconds(10);
-        envelopes[i].setSustainLevel(0.125f);
-        envelopes[i].setReleaseSeconds(10);
-        envelopes[i].trigger();
-        
-    }
-    for (int i=0; i < MAX_ENVELOPES; ++i)
-    {
-        oscillators[i].setSampleRate(sampleRate);
-        oscillators[i].setFrequency(440.f);
-    }
+    synth.setCurrentPlaybackSampleRate(sampleRate);
 }
 
 
@@ -134,20 +124,10 @@ void BlackAdderAudioProcessor::releaseResources()
 
 void BlackAdderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    float *output = buffer.getWritePointer(0);
-    for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-        for (int i = 0; i < MAX_OSCILLATORS; ++i) {
-            output[sample] += oscillators[i].getSample() * envelopes[0].getLevel();
-            oscillators[i].tick();
-        }
-        
-        for (int i = 0; i < MAX_ENVELOPES; ++i)
-            envelopes[i].tick();
-    }
-    if (envelopes[0].getCurrentState() == DEAD_STATE)
-        for (int i = 0; i < MAX_ENVELOPES; ++i)
-            envelopes[0].trigger();
-    
+    buffer.clear();
+    int numSamples = buffer.getNumSamples();
+    keyboardState.processNextMidiBuffer(midiMessages, 0, numSamples, true);
+    synth.renderNextBlock(buffer, midiMessages, 0, numSamples);
     buffer.copyFrom(1, 0, buffer, 0, 0, buffer.getNumSamples());
 }
 

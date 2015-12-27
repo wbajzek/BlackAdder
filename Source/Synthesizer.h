@@ -15,7 +15,8 @@
 #include "Oscillator.h"
 #include "Envelope.h"
 
-#define MAX_OSCILLATORS 256
-#define MAX_ENVELOPES 256
+#define MAX_VOICES 8
+#define MAX_OSCILLATORS 32
+#define MAX_ENVELOPES 32
 
 #endif  // SYNTHESIZER_H_INCLUDED

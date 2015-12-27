@@ -40,6 +40,7 @@ public:
     void tick();
     float getLevel();
     int getCurrentState();
+    bool isActive() const;
     
 private:
     void triggerDecay();

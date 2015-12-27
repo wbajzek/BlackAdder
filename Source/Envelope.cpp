@@ -176,6 +176,11 @@ public:
     }
 };
 
+bool Envelope::isActive() const
+{
+    return (state != DEAD_STATE);
+}
+
 static EnvelopeTests test;
 
 #endif

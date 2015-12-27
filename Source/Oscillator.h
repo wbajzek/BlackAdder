@@ -30,9 +30,9 @@ private:
     float sampleRate = 0.f;
     float frequency = 0.f;
     unsigned long index = 0;
-    int freqTL = 0;
+    float freqTL = 0.f;
     float increment = 0;
-    
+    float nyquist = 0.0;
 };
 
 

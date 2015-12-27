@@ -13,6 +13,9 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Synthesizer.h"
+#include "BlackAdderSynthesiser.h"
+#include "BlackAdderSynthesiserVoice.h"
+#include "BlackAdderSynthesiserSound.h"
 
 
 //==============================================================================
@@ -62,9 +65,9 @@ public:
 private:
     
     double currentSampleRate = 0.f;
-    Oscillator oscillators[MAX_OSCILLATORS];
-    Envelope envelopes[MAX_ENVELOPES];
-    
+    BlackAdderSynthesiser synth;
+    MidiKeyboardState keyboardState;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BlackAdderAudioProcessor)
 };

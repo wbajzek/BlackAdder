@@ -13,7 +13,8 @@
 void Oscillator::setSampleRate(float newSampleRate)
 {
     sampleRate = newSampleRate;
-    freqTL = WAVE_TABLE_LENGTH / sampleRate;
+    nyquist = sampleRate / 2.0;
+    freqTL = (float) WAVE_TABLE_LENGTH / sampleRate;
 }
 
 float Oscillator::getSampleRate()
@@ -40,7 +41,7 @@ void Oscillator::tick()
 
 float Oscillator::getSample()
 {
-    return sineWaveTable[index];
+    return (frequency >= nyquist) ? 0.0 : sineWaveTable[index];
 }
 
 
